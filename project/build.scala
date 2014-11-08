@@ -6,6 +6,9 @@ import sbtrelease.ReleasePlugin._
 import com.typesafe.tools.mima.plugin.MimaPlugin._
 import com.typesafe.tools.mima.plugin.MimaKeys._
 
+import com.typesafe.sbt.osgi.OsgiKeys
+import com.typesafe.sbt.osgi.SbtOsgi._
+
 object build extends Build {
   type Sett = Def.Setting[_]
 
@@ -31,6 +34,10 @@ object build extends Build {
     releaseSettings ++ 
     PublishSettings.all ++ 
     InfoSettings.all ++ 
+    osgiSettings ++ Seq[Sett](
+      OsgiKeys.additionalHeaders := Map("-removeheaders" -> "Include-Resource,Private-Package")
+    , OsgiKeys.exportPackage := Seq("argonaut.*;version=${Bundle-Version}")
+    ) ++
     net.virtualvoid.sbt.graph.Plugin.graphSettings ++ Seq[Sett](
       name := "argonaut"
     , (sourceGenerators in Compile) <+= (sourceManaged in Compile) map Boilerplate.gen
