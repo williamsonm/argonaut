@@ -13,7 +13,7 @@ object build extends Build {
   type Sett = Def.Setting[_]
 
   val base = ScalaSettings.all ++ Seq[Sett](
-      organization := "io.argonaut"
+      organization := "io.argonaut-osgi"
   )
 
   val scalazVersion              = "7.1.0"
